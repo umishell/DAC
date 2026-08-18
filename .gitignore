@@ -1,0 +1,42 @@
+# Secrets
+.env
+!.env.example
+
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Gradle / Kotlin
+.gradle/
+**/build/
+**/.kotlin/
+hs_err_pid*
+replay_pid*
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python tests
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+backend/contract-tests/.env
+backend/contract-tests/.token
+backend/contract-tests/.cache.json
+
+# Logs
+*.log
+
+# MAIL_DEV outbox (R9 password for local tests / defense)
+outbox/

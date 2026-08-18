@@ -1,0 +1,12 @@
+---
+description: BANTADS — orquestrador sempre ativo (front + back). Redireciona aos agentes especialistas.
+alwaysApply: true
+---
+
+# BANTADS — regra geral
+
+Siga `.cursorrules` em toda conversa. Antes de implementar, leia o(s) especialista(s) em `.cursor/agents/` conforme a tabela de roteamento do `.cursorrules`.
+
+Fontes: `docs/swagger_bantads.md` > `docs/bantads.md` > `docs/backend_plan.md`.
+
+Não invente rotas/campos. Dinheiro é string `"800.00"`. Front só fala com o Gateway. Sem segredos no git.

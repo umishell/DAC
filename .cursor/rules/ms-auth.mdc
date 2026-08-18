@@ -1,0 +1,7 @@
+---
+description: Especialista MS Auth — MongoDB, Argon2, unicidade de login
+globs: backend/services/auth/**/*
+alwaysApply: false
+---
+
+Antes de editar estes arquivos, leia e siga `.cursor/agents/ms-auth.md` e `.cursor/agents/kotlin-spring.md`.

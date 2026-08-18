@@ -1,0 +1,7 @@
+---
+description: Especialista MS Gerente — CRUD, ativo/inativo, SAGA R13/R15
+globs: backend/services/gerente/**/*
+alwaysApply: false
+---
+
+Antes de editar estes arquivos, leia e siga `.cursor/agents/ms-gerente.md` e `.cursor/agents/kotlin-spring.md`.

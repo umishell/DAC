@@ -1,0 +1,7 @@
+---
+description: Especialista MS Conta — CQRS, Event Sourcing, operações e extrato
+globs: backend/services/conta/**/*
+alwaysApply: false
+---
+
+Antes de editar estes arquivos, leia e siga `.cursor/agents/ms-conta.md` e `.cursor/agents/kotlin-spring.md`.

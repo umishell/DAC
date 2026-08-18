@@ -1,0 +1,18 @@
+---
+description: Compilar toda a frota em sequência (um app por vez) para poupar RAM
+alwaysApply: true
+---
+
+# Compilação sequencial (front + back)
+
+Quando for **compilar todos** os apps de uma vez, use o script na **raiz** — nunca Gradle/npm/Compose em paralelo na frota.
+
+- Windows: `./compile-services.ps1`
+- Git Bash / WSL: `./compile-services.sh`
+- Com testes por módulo: acrescente `--test`
+
+Ordem: `shared` → `auth` → `cliente` → `gerente` → `conta` → `saga` → `email` → `gateway` → `frontend`. Se `frontend/` ainda não existir, esse passo é ignorado.
+
+Imagens Docker: `start.sh` faz `docker compose build` **um serviço por vez** (esta versão do Compose não tem `--parallel`).
+
+Um módulo isolado (`:auth:bootJar` ou `npm run build` no front) pode continuar direto.

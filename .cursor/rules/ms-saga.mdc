@@ -1,0 +1,7 @@
+---
+description: Especialista Orquestrador SAGA — RabbitMQ, compensação, jobs
+globs: backend/services/saga/**/*
+alwaysApply: false
+---
+
+Antes de editar estes arquivos, leia e siga `.cursor/agents/ms-saga.md` e `.cursor/agents/kotlin-spring.md`.

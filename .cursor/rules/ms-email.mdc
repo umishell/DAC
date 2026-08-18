@@ -1,0 +1,7 @@
+---
+description: Especialista MS Email — SMTP Gmail, fire-and-forget, MAIL_DEV
+globs: backend/services/email/**/*
+alwaysApply: false
+---
+
+Antes de editar estes arquivos, leia e siga `.cursor/agents/ms-email.md`.

@@ -1,0 +1,7 @@
+---
+description: Especialista infra Docker/Compose — schemas, filas, mem_limit, start.sh
+globs: "{docker-compose.yml,docker-compose.yaml,start.sh,backend/**/Dockerfile,frontend/**/Dockerfile,db/**,backend/db/**}"
+alwaysApply: false
+---
+
+Antes de editar estes arquivos, leia e siga `.cursor/agents/infra.md`.

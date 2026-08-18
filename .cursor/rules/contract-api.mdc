@@ -1,0 +1,7 @@
+---
+description: Especialista contrato HTTP e testes pytest BANTADS
+globs: "{docs/swagger_bantads.md,backend/contract-tests/**,docs/professorTests/**}"
+alwaysApply: false
+---
+
+Antes de editar estes arquivos, leia e siga `.cursor/agents/contract-api.md`. Contrato = Swagger 2.0.0. Não distorcer o BANTADS.
