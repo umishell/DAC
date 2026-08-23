@@ -12,10 +12,12 @@ Contrato do front: [`.cursor/agents/frontend-angular.md`](../.cursor/agents/fron
 
 O front **nunca** chama Postgres, Mongo, Redis nem as portas 808x. Só o Gateway.
 
+Tutoriais de conceitos (fluxo ponta a ponta, um arquivo cada): [Gateway Fastify](./00-GATEWAY.md) · [Redis cache](./00-REDIS-CACHE.md) · [JWT](./00-JWT.md) · [HATEOAS](./00-HATEOAS.md) · [ACL](./00-ACL.md) · [Seed / reboot](./00-SEED.md).
+
 ## Pipeline comum (rotas autenticadas)
 
 1. Browser/HTTPie → `http://localhost:3000`  
-2. [CORS](../backend/gateway/src/app.ts) aceita `x-access-token`  
+2. [CORS](../backend/gateway/src/app.ts) aceita `x-access-token` (preflight `OPTIONS` — ver [00-GATEWAY](./00-GATEWAY.md))  
 3. [Hook JWT + sessão Redis](../backend/gateway/src/auth/hook.ts) injeta identidade  
 4. Handler do Gateway (proxy, composition ou SAGA)  
 5. MS Kotlin (`Controller → Service → Repository → DB`) **ou** RabbitMQ  
@@ -27,6 +29,12 @@ Rotas públicas (sem token): `GET /health`, `POST /login`, `POST /reboot`, `POST
 
 | ID | Tutorial | HTTPie |
 |---|---|---|
+| — | [como o Gateway Fastify funciona](./00-GATEWAY.md) | — |
+| — | [Redis cache (cadastro)](./00-REDIS-CACHE.md) | — |
+| — | [JWT `x-access-token`](./00-JWT.md) | — |
+| — | [HATEOAS / hypermedia](./00-HATEOAS.md) | — |
+| — | [ACL (Gateway + Identity)](./00-ACL.md) | — |
+| — | [Seed dos bancos (`/reboot`)](./00-SEED.md) | [HTTPie reboot](../httpie/TX-INFRA-02-reboot.md) |
 | `TX-INFRA-01` | [health](./TX-INFRA-01-health.md) | [HTTPie](../httpie/TX-INFRA-01-health.md) |
 | `TX-INFRA-02` | [reboot](./TX-INFRA-02-reboot.md) | [HTTPie](../httpie/TX-INFRA-02-reboot.md) |
 | `TX-R2A` | [login](./TX-R2A-login.md) | [HTTPie](../httpie/TX-R2A-login.md) |
