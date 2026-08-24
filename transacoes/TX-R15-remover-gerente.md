@@ -29,50 +29,67 @@ sequenceDiagram
         RMQ->>Saga: start
         Saga->>Ger: inativar (falha se ultimo ativo)
         Saga->>Auth: desativar
-        Saga->>Redis: DEL sessao:cpf e sessao:jti
+        Saga->>Redis: DEL sessao:cpf e sessao:jti LOCAL
         Saga->>Ger: listar ativos
         Saga->>Conta: transferir contas
-        Saga->>Cli: dados clientes
-        Saga->>Mail: troca gerente FF
+        alt semContas
+            Note over Saga: pula obter clientes e email
+        else
+            Saga->>Cli: dados clientes
+            Saga->>Mail: troca gerente FF
+        end
         Saga->>Redis: job inline mensagem
         Front->>GW: GET /jobs/{id}/result
         GW-->>Front: { mensagem }
     end
 ```
 
-Passos: [`SagaRegistry.removerGerente`](../backend/services/saga/src/main/kotlin/br/ufpr/dac/bantads/saga/engine/SagaRegistry.kt) (`SAGA_INVALIDAR_SESSAO` é passo **LOCAL** no orquestrador).
+Definição: [`SagaRegistry.removerGerente`](../backend/services/saga/src/main/kotlin/br/ufpr/dac/bantads/saga/engine/SagaRegistry.kt) (`SAGA_INVALIDAR_SESSAO` é passo **LOCAL** no orquestrador).
 
 ## O que acontece
 
 ### 1. Front
 
-Não mostra botão `remocao` no próprio card ([TX-R12](./TX-R12-listar-gerentes.md)). Poll + [TX-JOB-02](./TX-JOB-02-result.md).
+Não mostra o rel `remocao` no próprio card ([TX-R12](./TX-R12-listar-gerentes.md)). Trata 202: poll ([TX-JOB-01](./TX-JOB-01-status.md)). `resultType=inline` → [TX-JOB-02](./TX-JOB-02-result.md). O gerente some da lista; não existe `GET /gerentes/{cpf}` de sucesso.
 
-### 2. Gateway — pré-condição
+### 2. Gateway — 403 síncrono
 
-[`remover-gerente.ts`](../backend/gateway/src/routes/remover-gerente.ts):
+[`remover-gerente.ts`](../backend/gateway/src/routes/remover-gerente.ts) compara CPF do JWT com o path **antes** de criar job:
 
 ```17:21:backend/gateway/src/routes/remover-gerente.ts
+    const cpf = (request.params as { cpf: string }).cpf;
     if (request.user?.cpf === cpf) {
       return reply.code(403).send(Erros.forbidden('Não é permitido remover a si mesmo'));
     }
 ```
 
-### 3. SAGA
+Senão: job Redis + `saga.cmd` `REMOVER_GERENTE` + 202 + `Location: /jobs/{id}/status`. CPF inexistente ou já inativo **também** é 202; a falha vai no job.
 
-Inativar no Postgres; `AuthService.desativar` no Mongo (`ativo=false` → login 401). Logout forçado usa a chave reversa de [TX-R2A](./TX-R2A-login.md). Transferência: [`transferirContasDoGerente`](../backend/services/conta/src/main/kotlin/br/ufpr/dac/bantads/conta/command/http/ContaCommandService.kt) + eventos `GerenteAlterado`.
+### 3. Orquestrador
 
-Job sucesso: `resultType=inline`, mensagem `"Gerente removido; N contas transferidas para {nome}"` ([`SagaEngine.complete`](../backend/services/saga/src/main/kotlin/br/ufpr/dac/bantads/saga/engine/SagaEngine.kt)). Cache gerente apagado.
+Passos em [`SagaRegistry.removerGerente`](../backend/services/saga/src/main/kotlin/br/ufpr/dac/bantads/saga/engine/SagaRegistry.kt):
 
-Último ativo: job `FALHA` `"Não é permitido remover o último gerente ativo"` — DELETE ainda foi 202.
+| # | Comando | Nota |
+|---|---|---|
+| 1 | `GERENTE_INATIVAR` | FALHA se inexistente ou último ativo; compensação `GERENTE_REATIVAR` |
+| 2 | `AUTH_DESATIVAR` | `ativo=false` no Mongo; login vira `"Login inválido!"` |
+| 3 | `SAGA_INVALIDAR_SESSAO` | **LOCAL**: `DEL sessao:cpf:{cpf}` e `sessao:{jti}` |
+| 4 | `GERENTE_LISTAR_ATIVOS` | Destino ≠ removido |
+| 5 | `CONTA_TRANSFERIR_CONTAS_DO_GERENTE` | Eventos `GerenteAlterado`; compensação reassocia |
+| 6 | `CLIENTE_OBTER_POR_CPFS` | `skipIfTrue = semContas` |
+| 7 | `EMAIL_TROCA_GERENTE` | FF; `skipIfTrue = semContas` |
+
+Sucesso em [`SagaEngine`](../backend/services/saga/src/main/kotlin/br/ufpr/dac/bantads/saga/engine/SagaEngine.kt): job `inline` `{ mensagem: "Gerente removido; N contas transferidas para {Nome}" }` + `DEL cache:gerente:{cpf}`.
+
+Seed puro + Gadamântio (`40501740066`): N=0, destino típico Gyândula.
 
 ### 4. Front depois
 
-GET result; tentativas de login do removido falham; clientes migrados mudam `cpfGerente` na query.
+GET result; login do removido 401; token antigo 401; contas migradas mudam `cpfGerente` na query ([TX-R3B](./TX-R3B-consultar-conta-numero.md)). Job `FALHA` → result 409 ([TX-JOB-02](./TX-JOB-02-result.md)); o `erro` está no status.
 
 ## Arquivos-chave
 
-- [`remover-gerente.ts`](../backend/gateway/src/routes/remover-gerente.ts)  
-- [`SagaRegistry.kt`](../backend/services/saga/src/main/kotlin/br/ufpr/dac/bantads/saga/engine/SagaRegistry.kt)  
-- [`session.ts`](../backend/gateway/src/redis/session.ts) (chaves que o orquestrador apaga)  
-- [`ContaCommandService.kt`](../backend/services/conta/src/main/kotlin/br/ufpr/dac/bantads/conta/command/http/ContaCommandService.kt) (`transferirContasDoGerente`)
+- [`remover-gerente.ts`](../backend/gateway/src/routes/remover-gerente.ts)
+- [`SagaRegistry.kt`](../backend/services/saga/src/main/kotlin/br/ufpr/dac/bantads/saga/engine/SagaRegistry.kt)
+- [`SagaEngine.kt`](../backend/services/saga/src/main/kotlin/br/ufpr/dac/bantads/saga/engine/SagaEngine.kt)
+- [`session.ts`](../backend/gateway/src/redis/session.ts) (chaves que o passo LOCAL apaga)

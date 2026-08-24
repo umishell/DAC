@@ -25,6 +25,8 @@ Tutoriais de conceitos (fluxo ponta a ponta, um arquivo cada): [Gateway Fastify]
 
 Rotas públicas (sem token): `GET /health`, `POST /login`, `POST /reboot`, `POST /solicitacoes` — ver [`acl.ts`](../backend/gateway/src/auth/acl.ts).
 
+Este repositório de teste já tem o backend. Use cada tutorial + os **arquivos-chave** para copiar/adaptar no repo oficial. Checklist: [`../log_check_transactions.md`](../log_check_transactions.md). Fatiamento semanal (3 pessoas): [`../plano-entregas-backend.md`](../plano-entregas-backend.md).
+
 ## Catálogo
 
 | ID | Tutorial | HTTPie |

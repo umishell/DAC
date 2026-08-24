@@ -1,9 +1,40 @@
 # Log de checagem das transações BANTADS
 
-Marque o que já foi **testado no HTTPie** e **conferido no código** (`transacoes/` + implementação).  
-Tutoriais: [`httpie/`](httpie/00-GENERAL-INFO.md) · [`transacoes/`](transacoes/00-GERAL.md).
+Este log é o **checklist de porte**: copiar o backend deste repo de teste para o **repo oficial**, conferindo cada transação no código e no HTTPie. Não é para reescrever do zero — é para transcrever (e ajustar se o oficial exigir), marcar o item e seguir.
 
-**Como usar.** Cada transação tem um item **HTTPie** (rodar o request no Desktop e bater o contrato) e um item **Código** (abrir o tutorial de sequência e os arquivos citados). Os demais itens são regras, erros e subfluxos. Quando o seed estiver sujo, volte em `TX-INFRA-02` antes de continuar.
+Tutoriais de sequência: [`transacoes/`](transacoes/00-GERAL.md) · HTTPie: [`httpie/`](httpie/00-GENERAL-INFO.md) · Fatiamento semanal (3 pessoas): [`plano-entregas-backend.md`](plano-entregas-backend.md).
+
+**Como usar.** Cada transação tem **HTTPie** (rodar o request e bater o contrato) e **Código** (abrir o tutorial em `transacoes/` e os arquivos citados). Os demais itens são regras, erros e subfluxos. Seed sujo → `TX-INFRA-02` antes de continuar.
+
+| ID | Sequência | HTTPie |
+|---|---|---|
+| TX-INFRA-01 | [health](transacoes/TX-INFRA-01-health.md) | [HTTPie](httpie/TX-INFRA-01-health.md) |
+| TX-INFRA-02 | [reboot](transacoes/TX-INFRA-02-reboot.md) | [HTTPie](httpie/TX-INFRA-02-reboot.md) |
+| TX-R2A | [login](transacoes/TX-R2A-login.md) | [HTTPie](httpie/TX-R2A-login.md) |
+| TX-R2B | [logout](transacoes/TX-R2B-logout.md) | [HTTPie](httpie/TX-R2B-logout.md) |
+| TX-R1 | [autocadastro](transacoes/TX-R1-autocadastro.md) | [HTTPie](httpie/TX-R1-autocadastro.md) |
+| TX-R3A | [conta CPF](transacoes/TX-R3A-consultar-conta-cpf.md) | [HTTPie](httpie/TX-R3A-consultar-conta-cpf.md) |
+| TX-R3B | [conta número](transacoes/TX-R3B-consultar-conta-numero.md) | [HTTPie](httpie/TX-R3B-consultar-conta-numero.md) |
+| TX-R4 | [depósito](transacoes/TX-R4-deposito.md) | [HTTPie](httpie/TX-R4-deposito.md) |
+| TX-R5 | [saque](transacoes/TX-R5-saque.md) | [HTTPie](httpie/TX-R5-saque.md) |
+| TX-R6 | [transferência](transacoes/TX-R6-transferencia.md) | [HTTPie](httpie/TX-R6-transferencia.md) |
+| TX-R7 | [extrato](transacoes/TX-R7-extrato.md) | [HTTPie](httpie/TX-R7-extrato.md) |
+| TX-R8A | [listar solicitações](transacoes/TX-R8A-listar-solicitacoes.md) | [HTTPie](httpie/TX-R8A-listar-solicitacoes.md) |
+| TX-R8B | [consultar solicitação](transacoes/TX-R8B-consultar-solicitacao.md) | [HTTPie](httpie/TX-R8B-consultar-solicitacao.md) |
+| TX-R9 | [aprovar SAGA](transacoes/TX-R9-aprovar-cliente.md) | [HTTPie](httpie/TX-R9-aprovar-cliente.md) |
+| TX-R10 | [rejeitar](transacoes/TX-R10-rejeitar-cliente.md) | [HTTPie](httpie/TX-R10-rejeitar-cliente.md) |
+| TX-CAD-01 | [consultar cliente](transacoes/TX-CAD-01-consultar-cliente.md) | [HTTPie](httpie/TX-CAD-01-consultar-cliente.md) |
+| TX-R11 | [listar clientes](transacoes/TX-R11-consultar-clientes.md) | [HTTPie](httpie/TX-R11-consultar-clientes.md) |
+| TX-R12 | [listar gerentes](transacoes/TX-R12-listar-gerentes.md) | [HTTPie](httpie/TX-R12-listar-gerentes.md) |
+| TX-CAD-02 | [consultar gerente](transacoes/TX-CAD-02-consultar-gerente.md) | [HTTPie](httpie/TX-CAD-02-consultar-gerente.md) |
+| TX-R13 | [inserir gerente SAGA](transacoes/TX-R13-inserir-gerente.md) | [HTTPie](httpie/TX-R13-inserir-gerente.md) |
+| TX-R14 | [atualizar gerente](transacoes/TX-R14-atualizar-gerente.md) | [HTTPie](httpie/TX-R14-atualizar-gerente.md) |
+| TX-R15 | [remover gerente SAGA](transacoes/TX-R15-remover-gerente.md) | [HTTPie](httpie/TX-R15-remover-gerente.md) |
+| TX-R16 | [relatório](transacoes/TX-R16-relatorio-clientes.md) | [HTTPie](httpie/TX-R16-relatorio-clientes.md) |
+| TX-JOB-01 | [job status](transacoes/TX-JOB-01-status.md) | [HTTPie](httpie/TX-JOB-01-status.md) |
+| TX-JOB-02 | [job result](transacoes/TX-JOB-02-result.md) | [HTTPie](httpie/TX-JOB-02-result.md) |
+
+Conceitos transversais: [Gateway](transacoes/00-GATEWAY.md) · [JWT](transacoes/00-JWT.md) · [ACL](transacoes/00-ACL.md) · [HATEOAS](transacoes/00-HATEOAS.md) · [Redis cache](transacoes/00-REDIS-CACHE.md) · [Seed](transacoes/00-SEED.md).
 
 ---
 
@@ -423,7 +454,7 @@ Tutoriais: [`httpie/`](httpie/00-GENERAL-INFO.md) · [`transacoes/`](transacoes/
 
 - [ ] **HTTPie** — Siga [`httpie/TX-R15-remover-gerente.md`](httpie/TX-R15-remover-gerente.md). Login **Geniéve**. Teste 403 em si mesma **antes** de apagar Gadamântio. Reboot se o estado de gerentes estiver irreconhecível.
 
-- [ ] **Código** — [`remover-gerente.ts`](backend/gateway/src/routes/remover-gerente.ts): se `request.user.cpf === path` → 403 **sem** publish. Senão 202 + SAGA. [`SagaRegistry.removerGerente`](backend/services/saga/src/main/kotlin/br/ufpr/dac/bantads/saga/engine/SagaRegistry.kt): inativar → Auth desativar → **LOCAL** apaga `sessao:cpf` + `sessao:jti` → listar ativos → transferir contas → e-mails FF. Job `inline` com `mensagem`.
+- [ ] **Código** — Tutorial [`transacoes/TX-R15-remover-gerente.md`](transacoes/TX-R15-remover-gerente.md). [`remover-gerente.ts`](backend/gateway/src/routes/remover-gerente.ts): se `request.user.cpf === path` → 403 **sem** publish. Senão 202 + SAGA. [`SagaRegistry.removerGerente`](backend/services/saga/src/main/kotlin/br/ufpr/dac/bantads/saga/engine/SagaRegistry.kt): inativar → Auth desativar → **LOCAL** apaga `sessao:cpf` + `sessao:jti` → listar ativos → transferir contas → e-mails FF. Job `inline` com `mensagem`.
 
 ### Subtransações
 
