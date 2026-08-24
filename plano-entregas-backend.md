@@ -60,7 +60,7 @@ Ler: [`00-GATEWAY.md`](transacoes/00-GATEWAY.md) · [`TX-INFRA-01`](transacoes/T
 
 ### A — Gateway mínimo
 
-- [ ] Copiar `backend/gateway/` esqueleto: `app.ts`, `index.ts`, `config.ts`, CORS (`x-access-token`)
+- [x] Copiar `backend/gateway/` esqueleto: `app.ts`, `index.ts`, `config.ts`, CORS (`x-access-token`)
 - [ ] `GET /health` público → `{ "status": "UP" }` **sem** `_links`
 - [ ] ACL: `/health` na lista pública ([`acl.ts`](backend/gateway/src/auth/acl.ts))
 - [ ] Dockerfile + healthcheck do serviço `gateway` (porta **3000** no host)
