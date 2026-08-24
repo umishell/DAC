@@ -2,7 +2,7 @@
 
 Este repo é o **protótipo de teste**. O trabalho semanal é **copiar** o código daqui para o **repo oficial**, conferir no HTTPie e marcar [`log_check_transactions.md`](./log_check_transactions.md). Não reimplementar do zero: abrir o tutorial em [`transacoes/`](./transacoes/00-GERAL.md), transcrever os **arquivos-chave**, ajustar só se o oficial divergir (pacote, porta, nome de pasta).
 
-Front Angular **não** entra neste plano.
+Front Angular **não** entra neste plano. Contratos JSON (request/response): [`00-JSON-CATALOG.md`](./00-JSON-CATALOG.md).
 
 ---
 
@@ -35,26 +35,28 @@ Regra de ouro: A não inventa JSON; B não expõe porta 808x no host; C não fec
 
 Ao copiar: leia o tutorial da TX **antes**, cole no oficial, rode o HTTPie do recorte, marque o log.
 
-| # | Data | Módulo | Transações no log |
-|---|---|---|---|
-| E01 | 25/08/2026 | Infra + health | TX-INFRA-01 |
-| E02 | 01/09/2026 | Shared + MS Auth | (base de TX-R2A) |
-| E03 | 08/09/2026 | Gateway JWT / login / logout | TX-R2A, TX-R2B |
-| E04 | 15/09/2026 | Seed + `/reboot` | TX-INFRA-02 |
-| E05 | 22/09/2026 | MS Cliente síncrono | TX-R1, TX-R8A, TX-R8B, TX-R10, TX-CAD-01 |
-| E06 | 29/09/2026 | MS Conta query | TX-R3A, TX-R3B, TX-R7 |
-| E07 | 06/10/2026 | MS Conta command | TX-R4, TX-R5, TX-R6 |
-| E08 | 13/10/2026 | MS Gerente + composition + cache | TX-R11, TX-R12, TX-CAD-02, TX-R14 |
-| E09 | 20/10/2026 | Jobs + e-mail + SAGA esqueleto + R16 | TX-JOB-01, TX-JOB-02, TX-R16 |
-| E10 | 27/10/2026 | SAGA R9 | TX-R9 |
-| E11 | 03/11/2026 | SAGA R13 | TX-R13 |
-| E12 | 10/11/2026 | SAGA R15 + fecho | TX-R15 + convenções do log |
+| # | Data | Módulo | Transações no log | JSON (catálogo) |
+|---|---|---|---|---|
+| E01 | 25/08/2026 | Infra + health | TX-INFRA-01 | [req](json-catalog/TX-INFRA-01.md) · [resp](json-catalog/TX-INFRA-01.md) |
+| E02 | 01/09/2026 | Shared + MS Auth | (base de TX-R2A) | [TX-R2A req](json-catalog/TX-R2A.md) · [resp](json-catalog/TX-R2A.md) · [erros 401](json-catalog/TX-R2A.md) |
+| E03 | 08/09/2026 | Gateway JWT / login / logout | TX-R2A, TX-R2B | [R2A req](json-catalog/TX-R2A.md) · [resp](json-catalog/TX-R2A.md) · [R2B req](json-catalog/TX-R2B.md) · [resp 204](json-catalog/TX-R2B.md) |
+| E04 | 15/09/2026 | Seed + `/reboot` | TX-INFRA-02 | [req](json-catalog/TX-INFRA-02.md) · [resp](json-catalog/TX-INFRA-02.md) · [login seed](json-catalog/TX-R2A.md) |
+| E05 | 22/09/2026 | MS Cliente síncrono | TX-R1, TX-R8A, TX-R8B, TX-R10, TX-CAD-01 | [R1](json-catalog/TX-R1.md) · [R8A](json-catalog/TX-R8A.md) · [R8B](json-catalog/TX-R8B.md) · [R10](json-catalog/TX-R10.md) · [CAD-01](json-catalog/TX-CAD-01.md) |
+| E06 | 29/09/2026 | MS Conta query | TX-R3A, TX-R3B, TX-R7 | [R3A](json-catalog/TX-R3A.md) · [R3B](json-catalog/TX-R3B.md) · [R7](json-catalog/TX-R7.md) |
+| E07 | 06/10/2026 | MS Conta command | TX-R4, TX-R5, TX-R6 | [R4](json-catalog/TX-R4.md) · [R5](json-catalog/TX-R5.md) · [R6](json-catalog/TX-R6.md) |
+| E08 | 13/10/2026 | MS Gerente + composition + cache | TX-R11, TX-R12, TX-CAD-02, TX-R14 | [R11](json-catalog/TX-R11.md) · [R12](json-catalog/TX-R12.md) · [CAD-02](json-catalog/TX-CAD-02.md) · [R14](json-catalog/TX-R14.md) |
+| E09 | 20/10/2026 | Jobs + e-mail + SAGA esqueleto + R16 | TX-JOB-01, TX-JOB-02, TX-R16 | [JOB-01](json-catalog/TX-JOB-01.md) · [JOB-02](json-catalog/TX-JOB-02.md) · [R16](json-catalog/TX-R16.md) |
+| E10 | 27/10/2026 | SAGA R9 | TX-R9 | [req](json-catalog/TX-R9.md) · [202](json-catalog/TX-R9.md) · [job OK](json-catalog/TX-R9.md) |
+| E11 | 03/11/2026 | SAGA R13 | TX-R13 | [req](json-catalog/TX-R13.md) · [202](json-catalog/TX-R13.md) · [GET gerente](json-catalog/TX-R13.md) |
+| E12 | 10/11/2026 | SAGA R15 + fecho | TX-R15 + convenções do log | [403](json-catalog/TX-R15.md) · [DELETE](json-catalog/TX-R15.md) · [202](json-catalog/TX-R15.md) · [result](json-catalog/TX-R15.md) |
 
 ---
 
 ## E01 — 25/08/2026 — Infra + health
 
 Ler: [`00-GATEWAY.md`](transacoes/00-GATEWAY.md) · [`TX-INFRA-01`](transacoes/TX-INFRA-01-health.md)
+
+**Contratos JSON:** [TX-INFRA-01 request](json-catalog/TX-INFRA-01.md) · [response 200](json-catalog/TX-INFRA-01.md)
 
 ### A — Gateway mínimo
 
@@ -84,6 +86,8 @@ Ler: [`00-GATEWAY.md`](transacoes/00-GATEWAY.md) · [`TX-INFRA-01`](transacoes/T
 
 Ler: trecho Auth de [`TX-R2A`](transacoes/TX-R2A-login.md)
 
+**Contratos JSON (base):** [TX-R2A request](json-catalog/TX-R2A.md) · [response CLIENTE](json-catalog/TX-R2A.md) · [response GERENTE](json-catalog/TX-R2A.md) · [erros 401](json-catalog/TX-R2A.md)
+
 ### A — Tipos do Gateway
 
 - [ ] Copiar `backend/gateway/src/types/` (envelopes, command types, schemas Zod de `{ email, senha }`, erros 401 `{ auth, message }`)
@@ -110,6 +114,8 @@ Ler: trecho Auth de [`TX-R2A`](transacoes/TX-R2A-login.md)
 ## E03 — 08/09/2026 — JWT, sessão, login, logout
 
 Ler: [`00-JWT.md`](transacoes/00-JWT.md) · [`00-ACL.md`](transacoes/00-ACL.md) · [`TX-R2A`](transacoes/TX-R2A-login.md) · [`TX-R2B`](transacoes/TX-R2B-logout.md)
+
+**Contratos JSON:** [TX-R2A request](json-catalog/TX-R2A.md) · [response](json-catalog/TX-R2A.md) · [TX-R2B request](json-catalog/TX-R2B.md) · [response 204](json-catalog/TX-R2B.md) · [pós-logout 401](json-catalog/TX-R2B.md)
 
 ### A — Pipeline do Gateway
 
@@ -139,6 +145,8 @@ Ler: [`00-JWT.md`](transacoes/00-JWT.md) · [`00-ACL.md`](transacoes/00-ACL.md) 
 
 Ler: [`00-SEED.md`](transacoes/00-SEED.md) · [`TX-INFRA-02`](transacoes/TX-INFRA-02-reboot.md)
 
+**Contratos JSON:** [TX-INFRA-02 request](json-catalog/TX-INFRA-02.md) · [response](json-catalog/TX-INFRA-02.md) · [TX-R2A login CLIENTE](json-catalog/TX-R2A.md) · [TX-R2A login GERENTE](json-catalog/TX-R2A.md)
+
 ### A — Gateway reboot
 
 - [ ] Copiar [`reboot.ts`](backend/gateway/src/routes/reboot.ts): `POST /internal/reboot` em Auth, Cliente, Gerente, Conta em paralelo + `FLUSHDB`
@@ -166,6 +174,13 @@ Ler: [`00-SEED.md`](transacoes/00-SEED.md) · [`TX-INFRA-02`](transacoes/TX-INFR
 ## E05 — 22/09/2026 — MS Cliente síncrono
 
 Ler: [`TX-R1`](transacoes/TX-R1-autocadastro.md) · [`TX-R8A`](transacoes/TX-R8A-listar-solicitacoes.md) · [`TX-R8B`](transacoes/TX-R8B-consultar-solicitacao.md) · [`TX-R10`](transacoes/TX-R10-rejeitar-cliente.md) · [`TX-CAD-01`](transacoes/TX-CAD-01-consultar-cliente.md)
+
+**Contratos JSON:**
+- [TX-R1 request](json-catalog/TX-R1.md) · [response 201](json-catalog/TX-R1.md) · [409](json-catalog/TX-R1.md)
+- [TX-R8A request](json-catalog/TX-R8A.md) · [response](json-catalog/TX-R8A.md)
+- [TX-R8B request](json-catalog/TX-R8B.md) · [response PENDENTE](json-catalog/TX-R8B.md) · [response NAO_APROVADA](json-catalog/TX-R8B.md)
+- [TX-R10 request](json-catalog/TX-R10.md) · [response](json-catalog/TX-R10.md)
+- [TX-CAD-01 request](json-catalog/TX-CAD-01.md) · [response](json-catalog/TX-CAD-01.md)
 
 ### A — Proxy + cache cadastro
 
@@ -195,6 +210,11 @@ Ler: [`TX-R1`](transacoes/TX-R1-autocadastro.md) · [`TX-R8A`](transacoes/TX-R8A
 
 Ler: [`TX-R3A`](transacoes/TX-R3A-consultar-conta-cpf.md) · [`TX-R3B`](transacoes/TX-R3B-consultar-conta-numero.md) · [`TX-R7`](transacoes/TX-R7-extrato.md)
 
+**Contratos JSON:**
+- [TX-R3A request](json-catalog/TX-R3A.md) · [response CLIENTE](json-catalog/TX-R3A.md) · [response GERENTE](json-catalog/TX-R3A.md)
+- [TX-R3B request](json-catalog/TX-R3B.md) · [response](json-catalog/TX-R3B.md)
+- [TX-R7 request](json-catalog/TX-R7.md) · [response jan/2020](json-catalog/TX-R7.md) · [response 30 dias](json-catalog/TX-R7.md)
+
 ### A — Proxy query + HATEOAS por perfil
 
 - [ ] Proxy `GET /clientes/{cpf}/conta`, `GET /contas/{numero}`, `GET /contas/{numero}/extrato`
@@ -222,6 +242,11 @@ Ler: [`TX-R3A`](transacoes/TX-R3A-consultar-conta-cpf.md) · [`TX-R3B`](transaco
 
 Ler: [`TX-R4`](transacoes/TX-R4-deposito.md) · [`TX-R5`](transacoes/TX-R5-saque.md) · [`TX-R6`](transacoes/TX-R6-transferencia.md)
 
+**Contratos JSON:**
+- [TX-R4 request](json-catalog/TX-R4.md) · [response 201](json-catalog/TX-R4.md)
+- [TX-R5 request](json-catalog/TX-R5.md) · [response 201](json-catalog/TX-R5.md) · [422 saldo](json-catalog/TX-R5.md)
+- [TX-R6 request](json-catalog/TX-R6.md) · [response 201](json-catalog/TX-R6.md) · [422 mesma conta](json-catalog/TX-R6.md)
+
 ### A — Gateway writes + enrich R6
 
 - [ ] Proxy depósito/saque (só CLIENTE dono)
@@ -248,6 +273,12 @@ Ler: [`TX-R4`](transacoes/TX-R4-deposito.md) · [`TX-R5`](transacoes/TX-R5-saque
 
 Ler: [`TX-R11`](transacoes/TX-R11-consultar-clientes.md) · [`TX-R12`](transacoes/TX-R12-listar-gerentes.md) · [`TX-CAD-02`](transacoes/TX-CAD-02-consultar-gerente.md) · [`TX-R14`](transacoes/TX-R14-atualizar-gerente.md) · [`00-REDIS-CACHE.md`](transacoes/00-REDIS-CACHE.md)
 
+**Contratos JSON:**
+- [TX-R11 request](json-catalog/TX-R11.md) · [response filtro](json-catalog/TX-R11.md) · [response todos](json-catalog/TX-R11.md)
+- [TX-R12 request](json-catalog/TX-R12.md) · [response](json-catalog/TX-R12.md)
+- [TX-CAD-02 request](json-catalog/TX-CAD-02.md) · [response próprio](json-catalog/TX-CAD-02.md) · [response outro](json-catalog/TX-CAD-02.md)
+- [TX-R14 request](json-catalog/TX-R14.md) · [response](json-catalog/TX-R14.md)
+
 ### A — Composition + cache gerente
 
 - [ ] Copiar [`composition.ts`](backend/gateway/src/routes/composition.ts): R11 (cliente + saldos, sort `pt-BR`, **não** cachear); R12 (gerentes + contagem)
@@ -272,6 +303,11 @@ Ler: [`TX-R11`](transacoes/TX-R11-consultar-clientes.md) · [`TX-R12`](transacoe
 ## E09 — 20/10/2026 — Jobs + e-mail + esqueleto SAGA + R16
 
 Ler: [`TX-JOB-01`](transacoes/TX-JOB-01-status.md) · [`TX-JOB-02`](transacoes/TX-JOB-02-result.md) · [`TX-R16`](transacoes/TX-R16-relatorio-clientes.md)
+
+**Contratos JSON:**
+- [TX-JOB-01 request](json-catalog/TX-JOB-01.md) · [PENDENTE](json-catalog/TX-JOB-01.md) · [CONCLUIDO resource](json-catalog/TX-JOB-01.md) · [CONCLUIDO inline](json-catalog/TX-JOB-01.md) · [FALHA](json-catalog/TX-JOB-01.md)
+- [TX-JOB-02 request](json-catalog/TX-JOB-02.md) · [result R15](json-catalog/TX-JOB-02.md) · [result R16](json-catalog/TX-JOB-02.md)
+- [TX-R16 request](json-catalog/TX-R16.md) · [202](json-catalog/TX-R16.md) · [result](json-catalog/TX-R16.md)
 
 ### A — Jobs HTTP + relatório
 
@@ -302,6 +338,8 @@ Ler: [`TX-JOB-01`](transacoes/TX-JOB-01-status.md) · [`TX-JOB-02`](transacoes/T
 
 Ler: [`TX-R9`](transacoes/TX-R9-aprovar-cliente.md)
 
+**Contratos JSON:** [TX-R9 request](json-catalog/TX-R9.md) · [202](json-catalog/TX-R9.md) · [job CONCLUIDO](json-catalog/TX-R9.md) · [job FALHA](json-catalog/TX-R9.md) · [job FALHA e-mail](json-catalog/TX-R9.md) · [TX-CAD-01 pós-aprovação](json-catalog/TX-CAD-01.md)
+
 ### A — Gateway aprovação
 
 - [ ] Copiar [`aprovacao.ts`](backend/gateway/src/routes/aprovacao.ts): 202 **sem** pré-validar PENDENTE; `jobId = sagaId`
@@ -327,6 +365,8 @@ Ler: [`TX-R9`](transacoes/TX-R9-aprovar-cliente.md)
 ## E11 — 03/11/2026 — SAGA R13 (inserir gerente)
 
 Ler: [`TX-R13`](transacoes/TX-R13-inserir-gerente.md)
+
+**Contratos JSON:** [TX-R13 request](json-catalog/TX-R13.md) · [202](json-catalog/TX-R13.md) · [job CONCLUIDO](json-catalog/TX-R13.md) · [GET gerente criado](json-catalog/TX-R13.md) · [job FALHA e-mail](json-catalog/TX-R13.md) · [400 síncrono](json-catalog/TX-R13.md)
 
 ### A — Gateway POST `/gerentes`
 
@@ -355,6 +395,8 @@ Ler: [`TX-R13`](transacoes/TX-R13-inserir-gerente.md)
 ## E12 — 10/11/2026 — SAGA R15 + HATEOAS fino + aceite total
 
 Ler: [`TX-R15`](transacoes/TX-R15-remover-gerente.md) · [`00-HATEOAS.md`](transacoes/00-HATEOAS.md)
+
+**Contratos JSON:** [403 auto-remoção](json-catalog/TX-R15.md) · [DELETE request](json-catalog/TX-R15.md) · [202](json-catalog/TX-R15.md) · [job CONCLUIDO inline](json-catalog/TX-R15.md) · [result](json-catalog/TX-R15.md) · [login removido 401](json-catalog/TX-R15.md) · [job FALHA](json-catalog/TX-R15.md)
 
 ### A — Gateway DELETE + rewrite final
 

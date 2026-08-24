@@ -8,7 +8,7 @@
 > integração. Use o backend deste repo de teste com `docker compose up` enquanto o backend
 > oficial não estiver disponível.
 
-> **Catálogo de contratos JSON** (requests + responses completos com `_links`): [`00-JSON-CATALOG.md`](00-JSON-CATALOG.md)
+> **Catálogo de contratos JSON:** [`00-JSON-CATALOG.md`](00-JSON-CATALOG.md) (índice). Cada TX abre um arquivo em [`json-catalog/`](json-catalog/) — o Cursor só segue links de arquivo, não `#âncora`.
 
 ---
 
@@ -214,26 +214,28 @@ Referências: [transacoes/00-GATEWAY.md](transacoes/00-GATEWAY.md) · [transacoe
 
 ## Tabela de entregas
 
-| # | Data | Módulo | Backend pré-req | Transações validadas |
-|---|---|---|---|---|
-| F01 | 25/08/2026 | Setup + fundação | E01 (health) | TX-INFRA-01 |
-| F02 | 01/09/2026 | Interceptor + serviços HTTP + models | E02 (MS Auth) | — |
-| F03 | 08/09/2026 | Login / logout / guard de rota | E03 (Gateway JWT) | TX-R2A, TX-R2B |
-| F04 | 15/09/2026 | Integração seed + feedback de erros | E04 (seed/reboot) | TX-INFRA-02 |
-| F05 | 22/09/2026 | Autocadastro + telas de solicitação | E05 (MS Cliente síncrono) | TX-R1, TX-R8A, TX-R8B, TX-R10, TX-CAD-01 |
-| F06 | 29/09/2026 | Home do cliente + conta (leitura) | E06 (MS Conta query) | TX-R3A, TX-R3B |
-| F07 | 06/10/2026 | Depósito, saque, transferência, extrato | E07 (MS Conta command) | TX-R4, TX-R5, TX-R6, TX-R7 |
-| F08 | 13/10/2026 | Dashboard gerente + composition R11/R12 + CRUD gerente | E08 (MS Gerente + composition) | TX-R11, TX-R12, TX-CAD-02, TX-R14 |
-| F09 | 20/10/2026 | Infraestrutura de jobs + relatório assíncrono | E09 (jobs + R16) | TX-JOB-01, TX-JOB-02, TX-R16 |
-| F10 | 27/10/2026 | Fluxo de aprovação de cliente (SAGA R9) | E10 (SAGA R9) | TX-R9 |
-| F11 | 03/11/2026 | Inserção de gerente (SAGA R13) | E11 (SAGA R13) | TX-R13 |
-| F12 | 10/11/2026 | Remoção de gerente (SAGA R15) + aceite total | E12 (SAGA R15) | TX-R15 + convenções transversais |
+| # | Data | Módulo | Backend pré-req | Transações validadas | JSON (catálogo) |
+|---|---|---|---|---|---|
+| F01 | 25/08/2026 | Setup + fundação | E01 (health) | TX-INFRA-01 | [req](json-catalog/TX-INFRA-01.md) · [resp](json-catalog/TX-INFRA-01.md) |
+| F02 | 01/09/2026 | Interceptor + serviços HTTP + models | E02 (MS Auth) | — | [TX-R2A req](json-catalog/TX-R2A.md) · [resp](json-catalog/TX-R2A.md) (modelos) |
+| F03 | 08/09/2026 | Login / logout / guard de rota | E03 (Gateway JWT) | TX-R2A, TX-R2B | [R2A req](json-catalog/TX-R2A.md) · [resp](json-catalog/TX-R2A.md) · [R2B req](json-catalog/TX-R2B.md) · [resp](json-catalog/TX-R2B.md) |
+| F04 | 15/09/2026 | Integração seed + feedback de erros | E04 (seed/reboot) | TX-INFRA-02 | [req](json-catalog/TX-INFRA-02.md) · [resp](json-catalog/TX-INFRA-02.md) · [login seed](json-catalog/TX-R2A.md) |
+| F05 | 22/09/2026 | Autocadastro + telas de solicitação | E05 (MS Cliente síncrono) | TX-R1, TX-R8A, TX-R8B, TX-R10, TX-CAD-01 | [R1](json-catalog/TX-R1.md) · [R8A](json-catalog/TX-R8A.md) · [R8B](json-catalog/TX-R8B.md) · [R10](json-catalog/TX-R10.md) · [CAD-01](json-catalog/TX-CAD-01.md) |
+| F06 | 29/09/2026 | Home do cliente + conta (leitura) | E06 (MS Conta query) | TX-R3A, TX-R3B | [R3A req](json-catalog/TX-R3A.md) · [resp cliente](json-catalog/TX-R3A.md) · [resp gerente](json-catalog/TX-R3A.md) · [R3B](json-catalog/TX-R3B.md) |
+| F07 | 06/10/2026 | Depósito, saque, transferência, extrato | E07 (MS Conta command) | TX-R4, TX-R5, TX-R6, TX-R7 | [R4](json-catalog/TX-R4.md) · [R5](json-catalog/TX-R5.md) · [R6](json-catalog/TX-R6.md) · [R7](json-catalog/TX-R7.md) |
+| F08 | 13/10/2026 | Dashboard gerente + composition R11/R12 + CRUD gerente | E08 (MS Gerente + composition) | TX-R11, TX-R12, TX-CAD-02, TX-R14 | [R11](json-catalog/TX-R11.md) · [R12](json-catalog/TX-R12.md) · [CAD-02](json-catalog/TX-CAD-02.md) · [R14](json-catalog/TX-R14.md) |
+| F09 | 20/10/2026 | Infraestrutura de jobs + relatório assíncrono | E09 (jobs + R16) | TX-JOB-01, TX-JOB-02, TX-R16 | [JOB-01](json-catalog/TX-JOB-01.md) · [JOB-02](json-catalog/TX-JOB-02.md) · [R16](json-catalog/TX-R16.md) |
+| F10 | 27/10/2026 | Fluxo de aprovação de cliente (SAGA R9) | E10 (SAGA R9) | TX-R9 | [req](json-catalog/TX-R9.md) · [202](json-catalog/TX-R9.md) · [job OK](json-catalog/TX-R9.md) |
+| F11 | 03/11/2026 | Inserção de gerente (SAGA R13) | E11 (SAGA R13) | TX-R13 | [req](json-catalog/TX-R13.md) · [202](json-catalog/TX-R13.md) · [GET gerente](json-catalog/TX-R13.md) |
+| F12 | 10/11/2026 | Remoção de gerente (SAGA R15) + aceite total | E12 (SAGA R15) | TX-R15 + convenções transversais | [403](json-catalog/TX-R15.md) · [DELETE](json-catalog/TX-R15.md) · [202](json-catalog/TX-R15.md) · [result](json-catalog/TX-R15.md) |
 
 ---
 
 ## F01 — 25/08/2026 — Setup + fundação
 
 **Backend disponível:** [E01 health](plano-entregas-backend.md) · Ler: [transacoes/00-GATEWAY.md](transacoes/00-GATEWAY.md) · [transacoes/00-HATEOAS.md](transacoes/00-HATEOAS.md)
+
+**Contratos JSON:** [TX-INFRA-01 request](json-catalog/TX-INFRA-01.md) · [response 200](json-catalog/TX-INFRA-01.md)
 
 **Por que agora?** O backend só tem `/health` nesta semana. É o momento ideal para montar o projeto sem dependências de negócio.
 
@@ -269,6 +271,8 @@ Referências: [transacoes/00-GATEWAY.md](transacoes/00-GATEWAY.md) · [transacoe
 
 **Backend disponível:** [E02 MS Auth](plano-entregas-backend.md) · Ler: [transacoes/TX-R2A-login.md](transacoes/TX-R2A-login.md) · [transacoes/00-JWT.md](transacoes/00-JWT.md)
 
+**Contratos JSON (modelos):** [TX-R2A request](json-catalog/TX-R2A.md) · [response CLIENTE](json-catalog/TX-R2A.md) · [response GERENTE](json-catalog/TX-R2A.md) · [erros 401](json-catalog/TX-R2A.md)
+
 **Por que agora?** O MS Auth existe mas o Gateway JWT ainda não. O foco é construir o layer HTTP completo — quando o E03 chegar, a integração será só "ligar os cabos".
 
 ### X — Interceptor e AuthService
@@ -298,6 +302,8 @@ Referências: [transacoes/00-GATEWAY.md](transacoes/00-GATEWAY.md) · [transacoe
 ## F03 — 08/09/2026 — Login / logout / guard de rota
 
 **Backend disponível:** [E03 Gateway JWT/login/logout](plano-entregas-backend.md) · Ler: [transacoes/TX-R2A-login.md](transacoes/TX-R2A-login.md) · [transacoes/TX-R2B-logout.md](transacoes/TX-R2B-logout.md) · [transacoes/00-ACL.md](transacoes/00-ACL.md)
+
+**Contratos JSON:** [TX-R2A request](json-catalog/TX-R2A.md) · [response](json-catalog/TX-R2A.md) · [TX-R2B request](json-catalog/TX-R2B.md) · [response 204](json-catalog/TX-R2B.md) · [pós-logout 401](json-catalog/TX-R2B.md)
 
 **Por que agora?** O Gateway assina JWT e gerencia sessão Redis. Esta é a primeira entrega com integração real end-to-end.
 
@@ -336,6 +342,8 @@ Referências: [transacoes/00-GATEWAY.md](transacoes/00-GATEWAY.md) · [transacoe
 
 **Backend disponível:** [E04 seed/reboot](plano-entregas-backend.md) · Ler: [transacoes/TX-INFRA-02-reboot.md](transacoes/TX-INFRA-02-reboot.md) · [transacoes/00-SEED.md](transacoes/00-SEED.md)
 
+**Contratos JSON:** [TX-INFRA-02 request](json-catalog/TX-INFRA-02.md) · [response](json-catalog/TX-INFRA-02.md) · [TX-R2A login CLIENTE](json-catalog/TX-R2A.md) · [TX-R2A login GERENTE](json-catalog/TX-R2A.md)
+
 **Por que agora?** Com o seed real (`tads`), todas as telas subsequentes terão dados consistentes. É também o momento de blindar o front contra erros inesperados.
 
 ### X — Error handler global e HTTP resilience
@@ -370,6 +378,13 @@ Referências: [transacoes/00-GATEWAY.md](transacoes/00-GATEWAY.md) · [transacoe
 ## F05 — 22/09/2026 — Autocadastro + telas de solicitação
 
 **Backend disponível:** [E05 MS Cliente síncrono](plano-entregas-backend.md) · Ler: [transacoes/TX-R1-autocadastro.md](transacoes/TX-R1-autocadastro.md) · [transacoes/TX-R8A-listar-solicitacoes.md](transacoes/TX-R8A-listar-solicitacoes.md) · [transacoes/TX-R8B-consultar-solicitacao.md](transacoes/TX-R8B-consultar-solicitacao.md) · [transacoes/TX-R10-rejeitar-cliente.md](transacoes/TX-R10-rejeitar-cliente.md) · [transacoes/TX-CAD-01-consultar-cliente.md](transacoes/TX-CAD-01-consultar-cliente.md)
+
+**Contratos JSON:**
+- [TX-R1 request](json-catalog/TX-R1.md) · [response 201](json-catalog/TX-R1.md)
+- [TX-R8A request](json-catalog/TX-R8A.md) · [response](json-catalog/TX-R8A.md)
+- [TX-R8B request](json-catalog/TX-R8B.md) · [response PENDENTE](json-catalog/TX-R8B.md) · [response NAO_APROVADA](json-catalog/TX-R8B.md)
+- [TX-R10 request](json-catalog/TX-R10.md) · [response](json-catalog/TX-R10.md)
+- [TX-CAD-01 request](json-catalog/TX-CAD-01.md) · [response](json-catalog/TX-CAD-01.md)
 
 **Por que agora?** O MS Cliente expõe autocadastro (público) e listagem de solicitações (GERENTE). O front implementa as duas pontas.
 
@@ -412,6 +427,10 @@ Referências: [transacoes/00-GATEWAY.md](transacoes/00-GATEWAY.md) · [transacoe
 
 **Backend disponível:** [E06 MS Conta query](plano-entregas-backend.md) · Ler: [transacoes/TX-R3A-consultar-conta-cpf.md](transacoes/TX-R3A-consultar-conta-cpf.md) · [transacoes/TX-R3B-consultar-conta-numero.md](transacoes/TX-R3B-consultar-conta-numero.md)
 
+**Contratos JSON:**
+- [TX-R3A request](json-catalog/TX-R3A.md) · [response CLIENTE](json-catalog/TX-R3A.md) · [response GERENTE](json-catalog/TX-R3A.md)
+- [TX-R3B request](json-catalog/TX-R3B.md) · [response](json-catalog/TX-R3B.md)
+
 **Por que agora?** O read model de conta está pronto, incluindo os rels de operação para CLIENTE. A home do cliente pode exibir saldo e os botões de ação guiados por `_links`.
 
 ### X — ContaService com HATEOAS
@@ -451,6 +470,12 @@ Referências: [transacoes/00-GATEWAY.md](transacoes/00-GATEWAY.md) · [transacoe
 ## F07 — 06/10/2026 — Depósito, saque, transferência, extrato
 
 **Backend disponível:** [E07 MS Conta command](plano-entregas-backend.md) · Ler: [transacoes/TX-R4-deposito.md](transacoes/TX-R4-deposito.md) · [transacoes/TX-R5-saque.md](transacoes/TX-R5-saque.md) · [transacoes/TX-R6-transferencia.md](transacoes/TX-R6-transferencia.md) · [transacoes/TX-R7-extrato.md](transacoes/TX-R7-extrato.md)
+
+**Contratos JSON:**
+- [TX-R4 request](json-catalog/TX-R4.md) · [response 201](json-catalog/TX-R4.md)
+- [TX-R5 request](json-catalog/TX-R5.md) · [response 201](json-catalog/TX-R5.md) · [422 saldo](json-catalog/TX-R5.md)
+- [TX-R6 request](json-catalog/TX-R6.md) · [response 201](json-catalog/TX-R6.md)
+- [TX-R7 request](json-catalog/TX-R7.md) · [response jan/2020](json-catalog/TX-R7.md) · [response 30 dias](json-catalog/TX-R7.md)
 
 **Por que agora?** O event store está pronto. Esta entrega cobre toda a operação financeira do cliente.
 
@@ -494,6 +519,12 @@ Referências: [transacoes/00-GATEWAY.md](transacoes/00-GATEWAY.md) · [transacoe
 ## F08 — 13/10/2026 — Dashboard gerente + listas composition + CRUD gerente
 
 **Backend disponível:** [E08 MS Gerente + composition + cache](plano-entregas-backend.md) · Ler: [transacoes/TX-R11-consultar-clientes.md](transacoes/TX-R11-consultar-clientes.md) · [transacoes/TX-R12-listar-gerentes.md](transacoes/TX-R12-listar-gerentes.md) · [transacoes/TX-CAD-02-consultar-gerente.md](transacoes/TX-CAD-02-consultar-gerente.md) · [transacoes/TX-R14-atualizar-gerente.md](transacoes/TX-R14-atualizar-gerente.md)
+
+**Contratos JSON:**
+- [TX-R11 request](json-catalog/TX-R11.md) · [response filtro](json-catalog/TX-R11.md) · [response todos](json-catalog/TX-R11.md)
+- [TX-R12 request](json-catalog/TX-R12.md) · [response](json-catalog/TX-R12.md)
+- [TX-CAD-02 request](json-catalog/TX-CAD-02.md) · [response próprio](json-catalog/TX-CAD-02.md) · [response outro](json-catalog/TX-CAD-02.md)
+- [TX-R14 request](json-catalog/TX-R14.md) · [response](json-catalog/TX-R14.md)
 
 **Por que agora?** A composition de R11/R12 (cliente + saldo, gerente + contagem) está pronta. Esta é a semana mais densa do GERENTE.
 
@@ -540,6 +571,11 @@ Referências: [transacoes/00-GATEWAY.md](transacoes/00-GATEWAY.md) · [transacoe
 
 **Backend disponível:** [E09 jobs + email + SAGA esqueleto + R16](plano-entregas-backend.md) · Ler: [transacoes/TX-JOB-01-status.md](transacoes/TX-JOB-01-status.md) · [transacoes/TX-JOB-02-result.md](transacoes/TX-JOB-02-result.md) · [transacoes/TX-R16-relatorio-clientes.md](transacoes/TX-R16-relatorio-clientes.md)
 
+**Contratos JSON:**
+- [TX-JOB-01 request](json-catalog/TX-JOB-01.md) · [PENDENTE](json-catalog/TX-JOB-01.md) · [CONCLUIDO resource](json-catalog/TX-JOB-01.md) · [CONCLUIDO inline](json-catalog/TX-JOB-01.md) · [FALHA](json-catalog/TX-JOB-01.md)
+- [TX-JOB-02 request](json-catalog/TX-JOB-02.md) · [result R15](json-catalog/TX-JOB-02.md) · [result R16](json-catalog/TX-JOB-02.md)
+- [TX-R16 request](json-catalog/TX-R16.md) · [202](json-catalog/TX-R16.md) · [result](json-catalog/TX-R16.md)
+
 **Por que agora?** O `JobService` e o endpoint de relatório assíncrono chegam. Esta semana prepara toda a infraestrutura de polling que R9, R13 e R15 vão usar.
 
 ### X — JobService (infraestrutura completa)
@@ -583,6 +619,8 @@ Referências: [transacoes/00-GATEWAY.md](transacoes/00-GATEWAY.md) · [transacoe
 
 **Backend disponível:** [E10 SAGA R9](plano-entregas-backend.md) · Ler: [transacoes/TX-R9-aprovar-cliente.md](transacoes/TX-R9-aprovar-cliente.md)
 
+**Contratos JSON:** [TX-R9 request](json-catalog/TX-R9.md) · [202](json-catalog/TX-R9.md) · [job CONCLUIDO](json-catalog/TX-R9.md) · [job FALHA](json-catalog/TX-R9.md) · [TX-CAD-01 pós-aprovação](json-catalog/TX-CAD-01.md)
+
 **Por que agora?** A SAGA completa de aprovação está pronta. A UI do gerente pode agora usar o botão "Aprovar" (que aparece via HATEOAS na tela de solicitações).
 
 ### X — SolicitacaoService.aprovar
@@ -620,6 +658,8 @@ Referências: [transacoes/00-GATEWAY.md](transacoes/00-GATEWAY.md) · [transacoe
 ## F11 — 03/11/2026 — SAGA de inserção de gerente (R13)
 
 **Backend disponível:** [E11 SAGA R13](plano-entregas-backend.md) · Ler: [transacoes/TX-R13-inserir-gerente.md](transacoes/TX-R13-inserir-gerente.md)
+
+**Contratos JSON:** [TX-R13 request](json-catalog/TX-R13.md) · [202](json-catalog/TX-R13.md) · [job CONCLUIDO](json-catalog/TX-R13.md) · [GET gerente criado](json-catalog/TX-R13.md) · [job FALHA e-mail](json-catalog/TX-R13.md)
 
 **Por que agora?** A SAGA de inserção de gerente completa está pronta, incluindo a lógica de redistribuição de conta.
 
@@ -659,6 +699,8 @@ Referências: [transacoes/00-GATEWAY.md](transacoes/00-GATEWAY.md) · [transacoe
 ## F12 — 10/11/2026 — SAGA de remoção de gerente + aceite total
 
 **Backend disponível:** [E12 SAGA R15 + fecho](plano-entregas-backend.md) · Ler: [transacoes/TX-R15-remover-gerente.md](transacoes/TX-R15-remover-gerente.md) · [transacoes/00-HATEOAS.md](transacoes/00-HATEOAS.md)
+
+**Contratos JSON:** [403 auto-remoção](json-catalog/TX-R15.md) · [DELETE request](json-catalog/TX-R15.md) · [202](json-catalog/TX-R15.md) · [job CONCLUIDO inline](json-catalog/TX-R15.md) · [result](json-catalog/TX-R15.md) · [login removido 401](json-catalog/TX-R15.md)
 
 **Por que agora?** Última SAGA do sistema. Também é o momento de fechar convenções transversais, polir UX e garantir que o front está 100% alinhado com o contrato.
 
@@ -721,7 +763,7 @@ Referências: [transacoes/00-GATEWAY.md](transacoes/00-GATEWAY.md) · [transacoe
 
 | Recurso | Arquivo |
 |---|---|
-| **Catálogo JSON completo (requests + responses + `_links`)** | [`00-JSON-CATALOG.md`](00-JSON-CATALOG.md) |
+| **Catálogo JSON** | [`00-JSON-CATALOG.md`](00-JSON-CATALOG.md) (índice) · [`json-catalog/`](json-catalog/) (um arquivo por TX) |
 | Contrato REST completo | [`docs/swagger_bantads.md`](docs/swagger_bantads.md) |
 | Enunciado R1–R16 / seed | [`docs/bantads.md`](docs/bantads.md) |
 | Plano do backend (E01–E12) | [`plano-entregas-backend.md`](plano-entregas-backend.md) |
