@@ -14,7 +14,7 @@ O Angular **nunca** chama `auth:8080`, `cliente:8080`, etc. No Docker, esses MSs
 
 Isso resolve três problemas de uma vez:
 
-1. **Same-origin / CORS** — o browser só precisa de permissão para falar com *uma* origem (`localhost:3000`).
+1. **Same-origin / CORS** — o browser só precisa de permissão para falar com *uma* origem (`localhost:3000`), não precisa configurar todos os outros cors para se comunicar como outros ms. somente uma configuraçao , uma vez dentro da rede interna do gateway , tudo esta dentro da mesma rede interna docker e nao precisa de cors, cors somente entre frontend e gateway(backend).
 2. **AuthN** — JWT é assinado e verificado **somente** no Gateway. Os MSs confiam em headers internos.
 3. **Contrato único** — HATEOAS, jobs 202 e compositions (login, R11, R12, R16) nascem aqui.
 
