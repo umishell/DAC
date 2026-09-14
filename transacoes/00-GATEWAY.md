@@ -124,6 +124,8 @@ A partir daqui, **toda** request HTTP passa por: plugin CORS → hook `onRequest
 
 ## 3. Módulo CORS — same-origin, preflight OPTIONS e headers
 
+Tutorial dedicado com walkthrough de **cada arquivo e linha** de código: [00-CORS](./00-CORS.md).
+
 Este é o módulo que o browser enxerga **antes** de qualquer JSON de negócio.
 
 ### 3.1 O problema (two origins)

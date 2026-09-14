@@ -12,7 +12,7 @@ Contrato do front: [`.cursor/agents/frontend-angular.md`](../.cursor/agents/fron
 
 O front **nunca** chama Postgres, Mongo, Redis nem as portas 808x. Só o Gateway.
 
-Tutoriais de conceitos (fluxo ponta a ponta, um arquivo cada): [Gateway Fastify](./00-GATEWAY.md) · [API Composition](./00-COMPOSITION.md) · [Operações assíncronas e RabbitMQ](./00-ASSINCRONAS.md) · [Redis cache](./00-REDIS-CACHE.md) · [JWT](./00-JWT.md) · [HATEOAS](./00-HATEOAS.md) · [ACL](./00-ACL.md) · [Seed / reboot](./00-SEED.md).
+Tutoriais de conceitos (fluxo ponta a ponta, um arquivo cada): [Gateway Fastify](./00-GATEWAY.md) · [CORS](./00-CORS.md) · [API Composition](./00-COMPOSITION.md) · [Operações assíncronas e RabbitMQ](./00-ASSINCRONAS.md) · [Redis cache](./00-REDIS-CACHE.md) · [JWT](./00-JWT.md) · [HATEOAS](./00-HATEOAS.md) · [ACL](./00-ACL.md) · [Seed / reboot](./00-SEED.md).
 
 ## Pipeline comum (rotas autenticadas)
 
@@ -32,6 +32,7 @@ Este repositório de teste já tem o backend. Use cada tutorial + os **arquivos-
 | ID | Tutorial | HTTPie |
 |---|---|---|
 | — | [como o Gateway Fastify funciona](./00-GATEWAY.md) | — |
+| — | [CORS (preflight, headers, código)](./00-CORS.md) | — |
 | — | [API Composition](./00-COMPOSITION.md) | — |
 | — | [operações assíncronas e RabbitMQ](./00-ASSINCRONAS.md) | — |
 | — | [Redis cache (cadastro)](./00-REDIS-CACHE.md) | — |
