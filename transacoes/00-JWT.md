@@ -23,6 +23,36 @@ O front guarda o JWT no browser (permitido). **Não** persiste saldo/cadastro em
 
 ---
 
+Aqui está o resumo consolidado, extremamente objetivo e preciso, unindo o que você já dominava com os ajustes técnicos de empacotamento e fluxo:
+
+## 🔒 Trânsito e Armazenamento (Segurança na Rede e no Cliente)
+
+* HTTPS com TLS: Criptografa todos os pacotes HTTP em trânsito. Impede que hackers interceptem ou leiam dados (como senhas e tokens) na rede aberta ou redes Wi-Fi públicas.
+* Cookies HttpOnly e Secure: Armazenam o Access e o Refresh Token no navegador de forma blindada. A flag HttpOnly impede que códigos JavaScript (vírus via ataque XSS) acessem ou roubem os tokens. A flag Secure garante que eles só viajem via HTTPS. \*Atributo SameSite (Strict ou Lax): Protege a aplicação contra ataques CSRF (Cross-Site Request Forgery). Ele instrui o navegador a não enviar o cookie do token se a requisição estiver partindo de um site malicioso de terceiros, garantindo que o token só seja usado no seu domínio legítimo.
+* Argon2id: Algoritmo de hashing mais seguro da atualidade. Utilizado no backend para mascarar e salvar as senhas dos usuários no banco de dados com máxima resistência a ataques de força bruta.
+
+## 📝 Estrutura e Criação do JWT (Como ele é montado)
+
+* Partes do Token: Composto por Header (metadados do algoritmo), Payload (dados de identificação/claims) e Signature (assinatura criptográfica de integridade).
+* Codificação Base64URL individual: O Header e o Payload são codificados em Base64URL individualmente. O backend pega essas duas strings juntas (HeaderBase64.PayloadBase64) e aplica o algoritmo HS256 com a Chave Secreta para gerar a Assinatura (que também vira Base64URL).
+* O Ajuste (Junção Final): O token pronto é apenas a união dessas 3 strings separadas por pontos (Header.Payload.Signature). O JWT inteiro não passa por uma segunda rodada de criptografia ou codificação Base64URL no final. Cada parte do jwt foi codificada em base64url individualmente. 
+
+## 🔄 Fluxo de Acesso e Renovação (Como funciona na prática)
+
+* Access Token (15 minutos): Permite que o frontend acesse recursos da API de forma direta. O backend apenas decodifica e valida a assinatura usando a chave simétrica local (HS256) sem precisar consultar o banco de dados.
+* O Ajuste (Quem inicia o Refresh): Quando o Access Token expira, o backend rejeita a requisição (erro 401). É o frontend (cliente) quem percebe isso e envia o Refresh Token para uma rota isolada e exclusiva (POST /refresh).
+* Refresh Token (7 dias ou mais): Possui um tempo de vida longo e serve única e exclusivamente para solicitar novos Access Tokens ao endpoint de autenticação.
+* No momento do login, o servidor envia os tokens para o frontend através do cabeçalho de resposta Set-Cookie, instruindo o navegador a armazenar o access_token e o refresh_token de forma isolada em cookies configurados com as flags HttpOnly, Secure e SameSite. Uma vez salvos, o navegador assume o controle e passa a enviar esses tokens automaticamente de volta ao servidor em todas as próximas requisições HTTP permitidas, aglutinando-os em uma única linha de texto dentro do cabeçalho de requisição Cookie, onde cada token é identificado pela nomenclatura nome=valor e separado por um ponto e vírgula seguido de espaço (ex: access_token=JWT; refresh_token=String).
+
+## 🛡️ Defesa e Contenção de Danos (Se o Token for roubado)
+
+* Janela curta de ataque: Caso o Access Token seja roubado, o hacker só consegue se passar pelo usuário (com nível user) por no máximo 15 minutos, e ele nunca conseguirá alterar o payload para virar admin sem quebrar a assinatura.
+* Rotação de Refresh Tokens: Cada Refresh Token só pode ser usado uma única vez. Se o hacker roubar e tentar usar um Refresh Token antigo (ou se o usuário legítimo o fizer após o roubo), o backend detecta o reuso imediatamente, assume a fraude e invalida toda a família de tokens daquela sessão, deslogando o hacker e o usuário real na hora.
+
+Agora que todo o mapa mental está corrigido e consolidado, por onde você prefere avançar? Podemos ver a implementação em código do endpoint /refresh com a lógica de rotação ou a configuração correta do Argon2id para o cadastro de usuários?
+
+---
+
 ## 1. Onde está o código
 
 | Peça | Arquivo |
